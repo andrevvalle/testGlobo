@@ -1,0 +1,23 @@
+.post-container
+	.post-avatar
+		img(src="#{avatar}")
+	.post-content
+		.post-content--author
+			span!=author
+		.post-content--time
+			time!=time
+		if videopost
+			.post-content--body.body_before
+				p!=text
+				.body-media-container
+					figure.figure-wrapper.playVideo
+						img(src="#{videopost.url}")
+		else if imagepost
+			.post-content--body.body_before
+				p!=text
+				.body-media-container
+					figure.figure-wrapper
+						img(src="#{imagepost.url}")
+		else
+			.post-content--body
+				p!=text

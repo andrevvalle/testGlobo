@@ -1,0 +1,22 @@
+{
+  "name": "testGlobo",
+  "version": "0.0.1",
+  "homepage": "https://github.com/andrevvalle/testGlobo",
+  "authors": [
+    "Andre Valle <andrevvalle@icloud.com>"
+  ],
+  "description": "Test Globo.com",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.3",
+    "foundation": "~5.5.1",
+    "simplePagination.js": "https://github.com/flaviusmatis/simplePagination.js/zipball/master#~0.0.1"
+  }
+}

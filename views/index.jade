@@ -1,0 +1,23 @@
+include modules/default
+block body
+	body
+block content
+	.wrapper-content.row
+		.large-7.large-centered.columns
+			.feed
+				.feed-loading
+					p.loading="loading"
+				.feed-content
+					.feed-form--block
+						form.feed-form
+							.feed-form--avatar
+								img(src="public/images/avatar.png")
+							.feed-form--textarea
+								textarea(placeholder="Envie sua mensagem!")
+								span.alert-error
+							input(type="submit", class="feed-form--btn", value="Enviar")
+					.feed-posts--block
+						.feed-posts--list
+	block footer
+		script(src='https://cdn.socket.io/socket.io-1.3.5.js')
+		script(src="public/javascrips/main.js")
