@@ -4,7 +4,6 @@ var router = express.Router();
 var PostlistController = require('../api/controller/postlistController');
 
 router.get('/', function(req, res){
-	response.send(cool());
 	res.render('index', { title: "PostFeed Globo.com" });
 });
 
