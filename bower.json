@@ -16,7 +16,6 @@
   ],
   "dependencies": {
     "jquery": "~2.1.3",
-    "foundation": "~5.5.1",
-    "simplePagination.js": "https://github.com/flaviusmatis/simplePagination.js/zipball/master#~0.0.1"
+    "foundation": "~5.5.1"
   }
 }

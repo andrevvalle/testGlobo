@@ -29,6 +29,9 @@ $ ./start.sh
 ├── DB
 ├── node_modules
 ├── public
+│   ├── images
+│   ├── javascripts
+│   └── stylesheets
 ├── routes
 ├── vendor
 └── views
