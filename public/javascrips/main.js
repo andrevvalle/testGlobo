@@ -10868,10 +10868,9 @@ Feed.Application = (function() {
 
 	Application.fn.run = function(location) {
 	    var routeClass = this.routes[location.pathname];
-		var socket = io('http://localhost:8080');
 
 	    if (routeClass) {
-	    	var route = new routeClass(this.container, socket);
+	    	var route = new routeClass(this.container);
 	    	route.run();
 	    }
 	};
@@ -10883,16 +10882,15 @@ Feed.CommentFeedController = (function() {
 	// Set the Keyboard code for <enter>
 	var ENTER_KEYCODE = 13;
 
-	function CommentFeedController(container, textarea, store, socket) {
+	function CommentFeedController(container, textarea, store) {
 		this.container = $(container);
 		this.textarea = textarea;
 		this.submit = this.container.find('.feed-form');
 		this.store = store;
-		this.socket = socket;
 		
 		this.helpers = new Feed.Helpers(this.container, this.textarea);
 
-		this.store.init(this.helpers, this.socket);
+		this.store.init(this.helpers);
 	}
 
 	CommentFeedController.fn = CommentFeedController.prototype;
@@ -10930,7 +10928,6 @@ Feed.CommentFeedController = (function() {
 		if(textPost.length === 0){
 			this.helpers.textIsEmpty();
 		}else{
-
 			this.store.create(this.textarea, text);
 		}
 
@@ -11012,7 +11009,7 @@ Feed.PostFeed = (function() {
 
 	var TRANSITION_DURATION = 100;
 
-	function PostFeed(container, socket) {
+	function PostFeed(container) {
 		this.container = container;
 
 		this.loadingElement = this.container.find('.feed-loading');
@@ -11022,8 +11019,7 @@ Feed.PostFeed = (function() {
 		this.poststart = new Feed.CommentFeedController(
 			this.container,
 			this.container.find('.feed-form--textarea textarea'),
-			this.feedStore,
-			socket
+			this.feedStore
 		);
 	}
 
@@ -11050,9 +11046,8 @@ Feed.FeedStore = (function() {
 
 	FeedStore.fn = FeedStore.prototype;
 
-	FeedStore.fn.init = function(helpers, socket) {
+	FeedStore.fn.init = function(helpers) {
 	    this.helpers = helpers;
-	    this.socket = socket;
 	};
 	
 	FeedStore.fn.create = function(textarea, text) {
@@ -11071,36 +11066,27 @@ Feed.FeedStore = (function() {
 			videos: []
 		}
 
-		this.socket.emit('createPost', data);
-		this.socket.on('createClient', function(msg){
-			console.log(msg);
+		var deferred = $.Deferred();
+		var response = $.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: '/postfeed/' + this._id,
+			headers: {"X-HTTP-Method-Override": "PUT"},
+			data: data
 		});
-		// var deferred = $.Deferred();
-		// var response = $.ajax({
-		// 	type: 'POST',
-		// 	dataType: 'json',
-		// 	url: '/postfeed/' + this._id,
-		// 	headers: {"X-HTTP-Method-Override": "PUT"},
-		// 	data: data
-		// });
 
 
-		// response.done(function(payload, status, xhr){
-		// 	textarea.val('');
+		response.done(function(payload, status, xhr){
+			textarea.val('');
 			
-		// 	this.socket.on('createPost', function(data){
-		// 		// io.emit('createPost', msg);
-		// 		console.log(this.helpers, 'test')
-		// 		this.helpers.onPush(data);
-		// 	}.bind(this));
+			this.helpers.onPush(data);
+		}.bind(this));
 
-		// }.bind(this));
+		response.fail(function(xhr){
+			deferred.reject(xhr.responseJson.errors, xhr);
+		}.bind(this));
 
-		// response.fail(function(xhr){
-		// 	deferred.reject(xhr.responseJson.errors, xhr);
-		// }.bind(this));
-
-		// return deferred.promise();
+		return deferred.promise();
 	};
 
 	FeedStore.fn.get = function() {

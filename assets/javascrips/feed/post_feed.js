@@ -2,7 +2,7 @@ Feed.PostFeed = (function() {
 
 	var TRANSITION_DURATION = 100;
 
-	function PostFeed(container, socket) {
+	function PostFeed(container) {
 		this.container = container;
 
 		this.loadingElement = this.container.find('.feed-loading');
@@ -12,8 +12,7 @@ Feed.PostFeed = (function() {
 		this.poststart = new Feed.CommentFeedController(
 			this.container,
 			this.container.find('.feed-form--textarea textarea'),
-			this.feedStore,
-			socket
+			this.feedStore
 		);
 	}
 

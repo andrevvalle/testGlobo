@@ -2,16 +2,15 @@ Feed.CommentFeedController = (function() {
 	// Set the Keyboard code for <enter>
 	var ENTER_KEYCODE = 13;
 
-	function CommentFeedController(container, textarea, store, socket) {
+	function CommentFeedController(container, textarea, store) {
 		this.container = $(container);
 		this.textarea = textarea;
 		this.submit = this.container.find('.feed-form');
 		this.store = store;
-		this.socket = socket;
 		
 		this.helpers = new Feed.Helpers(this.container, this.textarea);
 
-		this.store.init(this.helpers, this.socket);
+		this.store.init(this.helpers);
 	}
 
 	CommentFeedController.fn = CommentFeedController.prototype;
@@ -49,7 +48,6 @@ Feed.CommentFeedController = (function() {
 		if(textPost.length === 0){
 			this.helpers.textIsEmpty();
 		}else{
-
 			this.store.create(this.textarea, text);
 		}
 

@@ -7,9 +7,8 @@ Feed.FeedStore = (function() {
 
 	FeedStore.fn = FeedStore.prototype;
 
-	FeedStore.fn.init = function(helpers, socket) {
+	FeedStore.fn.init = function(helpers) {
 	    this.helpers = helpers;
-	    this.socket = socket;
 	};
 	
 	FeedStore.fn.create = function(textarea, text) {
@@ -28,36 +27,27 @@ Feed.FeedStore = (function() {
 			videos: []
 		}
 
-		this.socket.emit('createPost', data);
-		this.socket.on('createClient', function(msg){
-			console.log(msg);
+		var deferred = $.Deferred();
+		var response = $.ajax({
+			type: 'POST',
+			dataType: 'json',
+			url: '/postfeed/' + this._id,
+			headers: {"X-HTTP-Method-Override": "PUT"},
+			data: data
 		});
-		// var deferred = $.Deferred();
-		// var response = $.ajax({
-		// 	type: 'POST',
-		// 	dataType: 'json',
-		// 	url: '/postfeed/' + this._id,
-		// 	headers: {"X-HTTP-Method-Override": "PUT"},
-		// 	data: data
-		// });
 
 
-		// response.done(function(payload, status, xhr){
-		// 	textarea.val('');
+		response.done(function(payload, status, xhr){
+			textarea.val('');
 			
-		// 	this.socket.on('createPost', function(data){
-		// 		// io.emit('createPost', msg);
-		// 		console.log(this.helpers, 'test')
-		// 		this.helpers.onPush(data);
-		// 	}.bind(this));
+			this.helpers.onPush(data);
+		}.bind(this));
 
-		// }.bind(this));
+		response.fail(function(xhr){
+			deferred.reject(xhr.responseJson.errors, xhr);
+		}.bind(this));
 
-		// response.fail(function(xhr){
-		// 	deferred.reject(xhr.responseJson.errors, xhr);
-		// }.bind(this));
-
-		// return deferred.promise();
+		return deferred.promise();
 	};
 
 	FeedStore.fn.get = function() {
