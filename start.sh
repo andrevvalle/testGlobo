@@ -8,8 +8,9 @@ installHomebrew() {
 }
 
 installNode() {
-	printf "\nInstalling Node.js...\n"
-	brew install node
+	printf "\nInstalling Node.js and Nodemon...\n"
+	brew install node &&
+	sudo npm install -g nodemon
 }
 
 installDependencies() {
@@ -21,11 +22,11 @@ installDependencies() {
 	if [ $? -eq 1 ]
 	then
 		sudo npm install -g grunt-cli
-		sudo npm install
 		sudo gem install sass
+		sudo npm install
 	else
-		sudo npm install
 		sudo gem install sass
+		sudo npm install
 	fi
 }
 
