@@ -62,6 +62,7 @@ Feed.Helpers = (function() {
 	    	html = Feed.templates.postfeed({author: data.author.name, avatar: data.author.avatar, text: data.body, time: this.prettyDateAt});
 		}
 
+		$('.loaderPost').hide();
 	    $('.feed-posts--list').prepend(html);
 	};
 

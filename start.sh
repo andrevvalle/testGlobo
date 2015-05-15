@@ -17,18 +17,7 @@ installDependencies() {
 	printf "You might need to type your password\n"
 	printf "don't be afraid!\n"
 	cd "$PROJECT_PATH"
-	type grunt >/dev/null 2>&1
-	if [ $? -eq 1 ]
-	then
-		sudo npm install -g nodemon
-		sudo npm install -g grunt-cli
-		sudo gem install sass
-		sudo npm install
-	else
-		sudo npm install -g nodemon
-		sudo gem install sass
-		sudo npm install
-	fi
+	sudo npm install
 }
 
 createLockFile() {
