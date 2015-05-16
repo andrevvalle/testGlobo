@@ -4,3 +4,4 @@
 /node_modules
 /.grunt
 npm-debug.log
+/*.env
