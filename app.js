@@ -23,7 +23,7 @@ app.set('view engine', 'jade');
 
 app.use('/', routes);
 
-server.listen(8080, function(){
+server.listen(5000, function(){
 	var port = server.address().port;
 
 	console.log("\nServidor rodando na porta => http://localhost:" + port + "\nCTRL + C para Sair.");
