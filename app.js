@@ -5,7 +5,6 @@ var server = http.createServer(app);
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var path = require('path');
-var cool = require('cool-ascii-faces');
 
 var routes = require('./routes');
 
