@@ -21,6 +21,9 @@ app.set('views', './views');
 app.set('view engine', 'jade');
 
 app.use('/', routes);
+app.use(function(req, res, next){
+  res.render('404', { status: 404, url: req.url });
+});
 
 server.listen(process.env.PORT || 3000, function(){
 	console.log("\nServidor rodando na porta => http://localhost:", server.address().port, app.settings.env);
