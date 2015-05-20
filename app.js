@@ -22,7 +22,7 @@ app.set('view engine', 'jade');
 
 app.use('/', routes);
 app.use(function(req, res, next){
-  res.render('404', { status: 404, url: req.url });
+  res.render('404', { title: "404 Error!" });
 });
 
 server.listen(process.env.PORT || 3000, function(){
